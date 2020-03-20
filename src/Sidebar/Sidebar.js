@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import dummyStore from '../dummy-store';
+import NotefulContext from "../NotefulContext";
 
 class Sidebar extends Component{
+    static contextType = NotefulContext;
     render() {
+        const { folders = [] } = this.context;
         return (
             <div>
                 <ul>
-                    { dummyStore.folders.map(folder => 
+                    { folders.map(folder => 
                         <li key={ folder.id }>
                             <NavLink to={`/folder/${ folder.id }`}>
                                 { folder.name }
