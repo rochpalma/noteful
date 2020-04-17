@@ -2,56 +2,54 @@ import React, { Component } from 'react';
 import Note from '../Note/Note';
 import { Link } from 'react-router-dom';
 import NotefulContext from '../NotefulContext';
+import './NoteList.css';
 
 class NoteList extends Component{
-    static defaultProps = {
-        deleteNote: () => {}
-    };
+    // static defaultProps = {
+    //     match: {
+    //         params: {}
+    //     }
+    // };
+
     static contextType = NotefulContext;
 
-    deleteNote = id => {
-        const noteId = id;
-        const url = "http://localhost:9090/notes/";
-        console.log(noteId);
-        fetch(url + `${noteId}`, {
-            method: "DELETE",
-            headers: {
-            "content-type": "application/json"
-            }
-        })
-        .then(response => {
-        if (!response.ok) {
-            throw new Error(response.status);
-        }
-        return response.json();
-        })
-        .then(() => {
-        this.context.deleteNote(noteId);
-        })
-        .catch(error => {
-        console.error({ error });
-        });
-    };
-    static contextType = NotefulContext;
     render(){
-        const { notes = [] } = this.context;
-        return(
-            <div>
+        const { notes } = this.context; 
+        const { folderId } = this.props.match.params;
+        const getNotes = folderId 
+              ? notes.filter(note => note.folderId === folderId)
+              : notes;
+        // const notesForFolder = getNotes.map(note => {
+        //     return <Note key={ note.id } note={ note } />
+        // })
+        //console.log("getNotes val is " + getNotes);
+        return(   
+            <div className='NoteList'>
                 <ul>                 
-                    { notes.map(note =>
-                        <li key={note.id}>
-                            <Link to={ `/note/${note.id}` }>
-                                {note.name}
-                            </Link>
-                            <button onClick={ e => {
-                                e.preventDefault();
-                                this.deleteNote(note.id)}}>
-                            Delete Note</button>
+                    { getNotes.map(note =>
+                        <li key={ note.id }>
+                            <Note
+                                // key={ note.id }
+                                //note={ note }
+                                id={note.id}
+                                name={note.name}
+                                modified={note.modified}
+                                />
                         </li>
                     ) }
-                    
+                    <div className='NoteList__button-container'>
+                        <Link 
+                            to='/addNote'
+                            className="noteLink"
+                        >
+                            <button className='NavCircleButton NoteList__add-note-button'>
+                                +
+                                {' '}
+                                Note
+                            </button>
+                        </Link>
+                    </div>
                 </ul>
-                <button>Add Note</button>
             </div>
         )
     }   

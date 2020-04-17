@@ -1,53 +1,56 @@
 import React, { Component } from 'react';
-import NotefulContext from "../NotefulContext";
+import NotefulContext from '../NotefulContext';
+import Note from '../Note/Note';
+import './NotePage.css';
 
 class NotePage extends Component {
   static contextType = NotefulContext;
 
-  deleteNote = id => {
-    const noteId = id;
-    const url = "http://localhost:9090/notes/";
-    console.log(noteId);
-    fetch(url + `${noteId}`, {
-      method: "DELETE",
-      headers: {
-        "content-type": "application/json"
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.status);
-        }
-        return response.json();
-      })
-      .then(() => {
-        this.context.deleteNote(noteId);
-      })
-      .catch(error => {
-        console.error({ error });
-      });
-  };
+  // deleteNote = id => {
+  //   const noteId = id;
+  //   const url = "http://localhost:9090/notes/";
+  //   console.log(noteId);
+  //   fetch(url + `${noteId}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "content-type": "application/json"
+  //     }
+  //   })
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error(response.status);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then(() => {
+  //       this.context.deleteNote(noteId);
+  //     })
+  //     .catch(error => {
+  //       console.error({ error });
+  //     });
+  // };
   render(){
-    const { notes = [], folders = [] } = this.context;
+    const { notes, folders } = this.context;
     const { noteId } = this.props.match.params;
 
-    const note = notes.find(note => note.id === noteId);
-    const noteFolder = folders.find(f => f.id === note.folderId);
+    const note = notes.find(note => note.id === noteId) || {};
+    //const noteFolder = folders.find(f => f.id === note.folderId);
+    console.log(note); 
+    //console.log(noteFolder);
+    
     return (
-        <div>
-            <div>
-                <h3>{ noteFolder.name }</h3>
-                <button onClick={ () => this.props.history.goBack() }>Back</button>
-            </div>
-            <div>
-                <h2>{ note.name }</h2>
-                <p>{ note.content }</p>
-                <button onClick={ e => {
-                            e.preventDefault();
-                            this.deleteNote(note.id)}}>
-                        Delete Note</button>
-            </div>
+      <section className='NotePage'>
+        <Note
+          id={ note.id }
+          name= { note.name }
+          modified = { note.modified }
+          onDelete={() => this.props.history.push('/')}
+        />
+        <div className='NotePage__content'>
+          <p>{ note.content }</p>
         </div>
+        
+      </section>
     );
   }
 }

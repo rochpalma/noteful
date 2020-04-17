@@ -1,0 +1,42 @@
+ .NoteList ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+  }
+  
+  .NoteList__button-container {
+    max-width: 380px;
+    margin: 0 10px;
+  }
+  
+  .NoteList__add-note-button {
+    margin: 0 auto 20px;
+    
+  }
+  .NoteList__add-note-button:hover {
+    background-color: #29862e;
+    color: white;
+  }
+
+  .noteLink{
+    text-decoration: none;
+}
+
+.NavCircleButton {
+    background-color: #cacaca;
+    border-radius: 60px;
+    border: 0;
+    color: black;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    height: 60px;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    width: 60px;
+  }
+  
+  .NavCircleButton:hover {
+    cursor: pointer;
+  }
