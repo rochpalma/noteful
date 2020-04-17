@@ -95,6 +95,9 @@ class AddNote extends Component {
     }
 
     render() {
+        const folderList = this.context.folders.map(folder => (
+            <option key={ folder.id } value={ folder.id }>{ folder.name }</option>
+        ));
         return (
             <section className='AddNote'>
                 <h2>Create a note</h2>
@@ -113,17 +116,52 @@ class AddNote extends Component {
                             aria-required='true'
                             aria-describedby={this.validateNoteName} 
                         />
+                        {this.state.noteName.touched && <ValidationError message={this.validateNoteName}/>}
                     </div>
-                    {this.state.noteName.touched && <ValidationError message={this.validateNoteName}/>}
+                    
                     
                     <div className='field'>
-                        <label htmlFor=''>
-
+                        <label htmlFor='note-folder-select'>
+                            Folder
                         </label>
-                        </div>
+                        <select
+                            id='note-folder-select' 
+                            name='note-folder-id' 
+                            value={this.state.folderId.value}
+                            onChange={e => this.handleChange(e)}
+                            required
+                            aria-required='true'
+                            aria-describedby={this.validateFolder}
+                        >
+                            <option value=''>Select a Folder...</option>
+                            {folderList}
+                        </select>
+                        {this.state.folderId.touched && <ValidationError message={this.validateFolder}/>}
+                    </div>
+                    <div className='field'>
+                        <label htmlFor='note-content-input'>
+                            Content
+                        </label>
+                        <textarea 
+                            id='note-content-input' 
+                            name='note-content'
+                            value={this.state.content.value}
+                            onChange={e => this.handleChange(e)}
+                            required
+                            aria-required='true'
+                            aria-describedby={this.validateContent}
+                         />
+                          {this.state.content.touched && <ValidationError message={this.validateContent}/>}
+                    </div>
                     <div className='buttons'>
-                        <button type='submit'>
-                            Add Note
+                        <button 
+                            type='submit'
+                            disabled={
+                                this.validateNoteName() ||
+                                this.validateFolder ||
+                                this.validateContent
+                        }>
+                            Create Note
                         </button>
                     </div>
                 </form>
