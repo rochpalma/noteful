@@ -1,55 +1,74 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import NotefulContext from '../NotefulContext';
+import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './Note.css';
 
-function Note(props){
-    return(
-    <NotefulContext.Consumer>
-      {context => {
-          const handleDelete = noteId => {
-            const url = `http://localhost:9090/notes/${noteId}`;
-            const options = { 
-              method: 'DELETE',
-              headers: {
-                'content-type': 'application/json'
-              }
-            }
-            fetch(url, options)
-              .then(response => {
-                if(!response.ok) {
-                  return(response.json()).then(error => {throw new Error("Failed", error.message)})
-                }
-              })
-              .then(() => {
-                if(props.history) {
-                  props.history.push('/')
-                }
-                context.deleteNote(noteId)
-                
-              })
-              .catch(error => console.log(error.message))
-            }
-      
-        const formattedDate = new Date(props.note.modified).toDateString();
-        return(
-            <div>
-                <h2>{ props.note.name }</h2>
-                <div>
-                    <p>Date modified on { formattedDate }</p>
-                    <button id={props.note.id} onClick={
-                        e => this.deleteNote(e.target.id)}>
-                            Delete Note</button>
-                </div>
-            </div>
+class Note extends Component {
+  // static defaultProps = {
+  //   onDeleteNote: () => {}
+  // }
 
-        );
-      }}
-    </NotefulContext.Consumer>
-    )
-    
-}
+  static contextType = NotefulContext;
 
-Note.defaultProps = {
-    deleteNote: () => {}
+  handleDelete = e => {
+    e.preventDefault();
+    const noteId = this.props.id;
+    const url = `http://localhost:9090/notes/${noteId}`;
+    const options = { 
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+    fetch(url, options)
+      .then(response => {
+        if(!response.ok) {
+          return(response.json()).then(error => {throw new Error("Failed to delete", error.message)})
+        }
+      })
+      .then(() => {
+        // if(props.history) {
+        //   props.history.push('/')
+        // }
+        this.context.deleteNote(noteId)  
+      })
+      .catch(error => console.log(error.message))
   }
+
+  render() {
+    const { name, id, modified } = this.props;
+    console.log("try");
+    console.log(name);
+    const formattedDate = new Date(modified).toDateString(); 
+    return (    
+      <div className='Note'>
+          <h2 className='Note__title'>
+            <Link to={`/note/${ id }`}>
+              { name }
+            </Link>
+          </h2>
+          <button
+                className='Note__delete' 
+                onClick={this.handleDelete}
+          >
+                <FontAwesomeIcon icon='trash-alt' />
+          {' '}
+                Delete
+            </button>
+          <div className='Note__dates'>
+              <div className='Note__dates-modified'>
+                <p>Modified on <span className='Date'>{ formattedDate }</span></p>                
+              </div>      
+          </div>
+      </div>    
+    );
+  }
+}
+ 
+Note.propTypes = {
+  note: PropTypes.object.isRequired
+}
 
 export default Note;
