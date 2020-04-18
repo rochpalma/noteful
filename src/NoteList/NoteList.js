@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import Note from '../Note/Note';
 import { Link } from 'react-router-dom';
 import NotefulContext from '../NotefulContext';
+import Note from '../Note/Note';
 import './NoteList.css';
 
 class NoteList extends Component{
-    // static defaultProps = {
-    //     match: {
-    //         params: {}
-    //     }
-    // };
-
     static contextType = NotefulContext;
 
     render(){
@@ -19,22 +13,16 @@ class NoteList extends Component{
         const getNotes = folderId 
               ? notes.filter(note => note.folderId === folderId)
               : notes;
-        // const notesForFolder = getNotes.map(note => {
-        //     return <Note key={ note.id } note={ note } />
-        // })
-        //console.log("getNotes val is " + getNotes);
         return(   
             <div className='NoteList'>
                 <ul>                 
                     { getNotes.map(note =>
                         <li key={ note.id }>
                             <Note
-                                // key={ note.id }
-                                //note={ note }
-                                id={note.id}
-                                name={note.name}
-                                modified={note.modified}
-                                />
+                                id={ note.id }
+                                name={ note.name }
+                                modified={ note.modified }
+                            />
                         </li>
                     ) }
                     <div className='NoteList__button-container'>
@@ -44,7 +32,7 @@ class NoteList extends Component{
                         >
                             <button className='NavCircleButton NoteList__add-note-button'>
                                 +
-                                {' '}
+                                { ' ' }
                                 Note
                             </button>
                         </Link>

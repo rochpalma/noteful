@@ -21,8 +21,6 @@ class App extends Component {
    static contextType = NotefulContext;
 
   componentDidMount() {
-    //const url = "http://localhost:9090";
-
     Promise.all([
       fetch(`http://localhost:9090/folders`),
       fetch(`http://localhost:9090/notes`)
@@ -81,63 +79,68 @@ class App extends Component {
       addNote: this.handleAddNote,
       deleteNote: this.handleDeleteNote
     };
-    {console.log(contextValue)}
+    
     return (
       <NotefulContext.Provider value={ contextValue }>
         <div className='App'>
+          <ErrorBoundary>
             <nav className='App__nav '>
               <Switch>
                 <Route 
                   exact 
                   path="/" 
                   component={ Sidebar } 
-                />
+                  />
                  <Route 
                   path="/folder/:folderId" 
                   component={ Sidebar } 
-                />
+                  />
                 <Route  
                   path="/note/:noteId" 
                   component={ NoteSidebar } 
-                />
+                  />
                 <Route 
                   path="/addFolder" 
                   component={ NoteSidebar } 
-                /> 
+                  /> 
                 <Route 
                   path="/addNote" 
                   component={ NoteSidebar }  
-                /> 
+                  /> 
               </Switch>             
             </nav>
+          </ErrorBoundary>
             <Header /> 
+          <ErrorBoundary>
+
             <main className='App__main'>
                <Switch>
                 <Route 
                     exact 
                     path="/" 
                     component={ NoteList } 
-                  />
+                    />
                   <Route 
                     path="/folder/:folderId" 
                     component={ NoteList } 
-                  />
+                    />
                    <Route  
                     path="/note/:noteId" 
                     component={ NotePage } 
-                  />
+                    />
                   <Route 
                     path="/addFolder" 
                     component={ AddFolder } 
-                  /> 
+                    /> 
                   <Route 
                     path="/addNote" 
                     component={ AddNote }  
-                  />  
+                    />  
               </Switch>
             </main>       
+          </ErrorBoundary>
         </div>
-        </NotefulContext.Provider>
+      </NotefulContext.Provider>
     );
   } 
 }

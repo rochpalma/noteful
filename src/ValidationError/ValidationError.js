@@ -14,7 +14,7 @@ const ValidationError = (props) => {
 
 ValidationError.propTypes = {
     hasError: PropTypes.bool,
-    message: PropTypes.string,
+    message: PropTypes.string
 }
  
 export default ValidationError;
