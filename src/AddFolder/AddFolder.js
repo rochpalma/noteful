@@ -17,23 +17,14 @@ class AddFolder extends Component {
 
     static contextType = NotefulContext;
 
-    updateFolderName = (folderName) =>{
+    handleFolderChange = (folder) =>{
         this.setState({
-            folderName: {
-                value: folderName,
+            folder: {
+                value: folder,
                 touched: true
             }
         });
     }
-
-    // validateFolderName(){
-    //     if(!this.state.folderName.value.length){
-    //         return "Folder name is required";
-    //     }
-    //     else if(!this.state.folderName.match(new RegExp(/^([a-zA-Z0-9])+$/))){
-    //         return "Folder name must use alphanumeric characters";
-    //     }
-    // }
 
     handleSubmit = e => {
         e.preventDefault();
@@ -51,18 +42,19 @@ class AddFolder extends Component {
         fetch(url, options)
         .then(response => {
             if(!response.ok) {
-                return(response.json()).then(error => {throw new Error("Failed to add folder", error.message)})
+                return(response.json()).then(error => {
+                    throw new Error("Failed to add folder", error.message)
+                })
             }
             return response.json();
         })
         .then(() => {
-            // if(props.history) {
-            //   props.history.push('/')
-            // }
             this.context.addFolder(newFolder);
             this.props.history.push('/'); 
         })
-        .catch(error => this.setState({error: error.message}))
+        .catch(error => this.setState({
+            error: error.message
+        }))
 
     }
     render() {          

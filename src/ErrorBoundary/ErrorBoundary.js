@@ -5,7 +5,7 @@ class ErrorBoundary extends Component {
         super(props);
         this.state = {
             hasError: false,
-            error: ""
+            error: null
         }
     }
 
@@ -15,6 +15,7 @@ class ErrorBoundary extends Component {
             error: error.message
         }
     }
+    
     render() {
         if(this.state.hasError){ 
             return (
