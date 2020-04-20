@@ -61,9 +61,9 @@ class AddNote extends Component {
             this.context.addNote(newNote)
             this.props.history.push(`/folder/${newNote.folderId}`)
           })
-        .catch(err => {
+        .catch(error => {
             this.setState({
-                error: err.message
+                error: error.message
             })
         })
     }
