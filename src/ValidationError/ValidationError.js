@@ -1,10 +1,11 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import './ValidationError.css'
 
 const ValidationError = (props) => {
-    if(props.hasError){
+    if(props.message){
         return (
-            <div>
+            <div className='error'>
                 { props.message }
             </div>
         )
@@ -13,7 +14,6 @@ const ValidationError = (props) => {
 }
 
 ValidationError.propTypes = {
-    hasError: PropTypes.bool,
     message: PropTypes.string
 }
  

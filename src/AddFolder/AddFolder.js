@@ -11,33 +11,27 @@ class AddFolder extends Component {
                 value: '',
                 touched: false
             },
+            id: '',
             error: null
         }
     }
 
     static contextType = NotefulContext;
 
-    handleFolderChange = (folder) =>{
-        this.setState({
-            folder: {
-                value: folder,
-                touched: true
-            }
-        });
-    }
-
     handleSubmit = e => {
         e.preventDefault();
         const newFolder = {
+            id: Math.random().toString(36).substr(2,15),
             name: this.state.folderName.value
         }
+        console.log(this.state.folderName.value, "newfolder");
         const url = `http://localhost:9090/folders`;
         const options = { 
             method: 'POST',
-            body: JSON.stringify(newFolder),
             headers: {
                 'content-type': 'application/json'
-            }
+            },
+            body: JSON.stringify(newFolder)
         }
         fetch(url, options)
         .then(response => {
@@ -49,15 +43,35 @@ class AddFolder extends Component {
             return response.json();
         })
         .then(() => {
+            console.log(newFolder);
             this.context.addFolder(newFolder);
             this.props.history.push('/'); 
         })
         .catch(error => this.setState({
             error: error.message
         }))
-
     }
-    render() {          
+
+    handleFolderChange(folder){
+        this.setState({
+            folderName: {
+                value: folder,
+                touched: true
+            }
+        });
+    }
+
+    validateFolder(){
+        const name = this.state.folderName.value.trim();
+        if (name.length === 0) {
+            return 'Name is required';
+        } else if (name.length < 3) {
+            return 'Name must be at least 3 characters long';
+        }
+    }
+
+    render() { 
+        console.log(this.state.folderName.touched)
         return (
             <section className='AddFolder'> 
                 <h2>Create a folder</h2>      
@@ -70,15 +84,20 @@ class AddFolder extends Component {
                             type='text' 
                             id='folder-name-input' 
                             name='folder-name-input'
-                            onChange={e => this.updateFolderName(e.target.value)}
+                            onChange={e => this.handleFolderChange(e.target.value)}
                             required
-                            aria-required='true'
-                            aria-describedby={this.validateFolderName} 
                         />
                     </div>
-                    {this.state.folderName.touched && <ValidationError message={this.validateFolderName}/>}
+                    { this.state.folderName.touched && (
+                        <ValidationError message={this.validateFolder()}/>
+                    ) }
                     <div className='buttons'>
-                        <button type='submit'>
+                        <button 
+                            type='submit'
+                            disabled={
+                                this.validateFolder()
+                            }
+                        >
                             Add folder
                         </button>
                     </div>
