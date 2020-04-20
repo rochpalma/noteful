@@ -10,7 +10,7 @@ class Note extends Component {
   handleDelete = e => {
     e.preventDefault();
     const noteId = this.props.id;
-    const url = `http://localhost:9090/notes/${noteId}`;
+    const url = `http://localhost:9090/notes/${ noteId }`;
     const options = { 
       method: 'DELETE',
       headers: {

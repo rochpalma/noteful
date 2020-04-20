@@ -71,11 +71,10 @@ class AddFolder extends Component {
     }
 
     render() { 
-        console.log(this.state.folderName.touched)
         return (
             <section className='AddFolder'> 
                 <h2>Create a folder</h2>      
-                <form className='Noteful-form' onSubmit={e => this.handleSubmit(e)} >    
+                <form className='Noteful-form' onSubmit={ e => this.handleSubmit(e) } >    
                     <div className='field'>
                         <label htmlFor='folder-name-input'>
                             Name
@@ -84,12 +83,12 @@ class AddFolder extends Component {
                             type='text' 
                             id='folder-name-input' 
                             name='folder-name-input'
-                            onChange={e => this.handleFolderChange(e.target.value)}
+                            onChange={ e => this.handleFolderChange(e.target.value) }
                             required
                         />
                     </div>
                     { this.state.folderName.touched && (
-                        <ValidationError message={this.validateFolder()}/>
+                        <ValidationError message={ this.validateFolder() }/>
                     ) }
                     <div className='buttons'>
                         <button 
