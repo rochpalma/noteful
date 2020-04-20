@@ -179,7 +179,7 @@ class AddNote extends Component {
                             disabled={
                                 this.validateNoteName() ||
                                 this.validateFolder() ||
-                                this.validateContent ()
+                                this.validateContent()
                             }
                         >
                             Create Note
