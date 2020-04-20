@@ -24,7 +24,7 @@ class AddNote extends Component {
             error: null
         }
     }
-    
+  
     static contextType = NotefulContext;
 
     handleSubmit = e => {
@@ -181,6 +181,7 @@ class AddNote extends Component {
                                 this.validateNoteName() ||
                                 this.validateFolder() ||
                                 this.validateContent()
+
                             }
                         >
                             Create Note
