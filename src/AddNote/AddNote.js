@@ -19,6 +19,7 @@ class AddNote extends Component {
                 value: '',
                 touched: false
             },
+            id: '',
             modified: '',
             error: null
         }
@@ -27,12 +28,13 @@ class AddNote extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        const { noteName, content, folderId, modified } = this.state;
+        const { noteName, content, folderId } = this.state;
         const newNote = {
+            id: Math.random().toString(36).substr(2,15),
             name: noteName.value,
-            content: content.value,
+            modified: new Date(),
             folderId: folderId.value,
-            modified: new Date()
+            content: content.value            
         }
         console.log(newNote);
 
@@ -44,7 +46,7 @@ class AddNote extends Component {
             },
             body: JSON.stringify(newNote)
         }
-           
+
         fetch(url, options)
         .then(response => {
             if(!response.ok) {
@@ -60,10 +62,9 @@ class AddNote extends Component {
             this.props.history.push(`/folder/${newNote.folderId}`)
           })
         .catch(err => {
-            console.log({error: err.message}, 'error to');
-            // this.setState({
-            //     error: err.message
-            // })
+            this.setState({
+                error: err.message
+            })
         })
     }
 
@@ -96,13 +97,17 @@ class AddNote extends Component {
 
     //add validations method
     validateNoteName(){
-        if(!this.state.noteName.value.length){
-            return "Note title is required";
+        const name = this.state.noteName.value.trim();
+        if (name.length === 0) {
+            return 'Note title is required';
+        } else if (name.length < 3) {
+            return 'Name must be at least 3 characters long';
         }
     }
 
     validateContent(){
-        if(!this.state.content.value.length){
+        const content = this.state.content.value.trim();
+        if (content.length === 0) {
             return "Content is required";
         }
     }
@@ -123,7 +128,7 @@ class AddNote extends Component {
                 <h2>Create a note</h2>
                 <form className='Noteful-form' onSubmit={e => this.handleSubmit(e)}>
                     <div className='field'>
-                        <label htmlFor='folder-name-input'>
+                        <label htmlFor='note-name-input'>
                         Name
                         </label>
                         <input 
@@ -132,10 +137,10 @@ class AddNote extends Component {
                             name='note-name-input'
                             onChange={e => this.handleNoteNameChange(e.target.value)}
                             required
-                            aria-required='true'
-                            aria-describedby={this.validateNoteName} 
                         />
-                        {this.state.noteName.touched && <ValidationError message={this.validateNoteName}/>}
+                        { this.state.noteName.touched && (
+                            <ValidationError message={this.validateNoteName()}/>
+                        ) }
                     </div>
                     <div className='field'>
                         <label htmlFor='note-content-input'>
@@ -149,7 +154,9 @@ class AddNote extends Component {
                             aria-required='true'
                             aria-describedby={this.validateContent}
                          />
-                          {this.state.content.touched && <ValidationError message={this.validateContent}/>}
+                          { this.state.content.touched && (
+                              <ValidationError message={this.validateContent()}/>
+                          ) }
                     </div>                                       
                     <div className='field'>
                         <label htmlFor='note-folder-select'>
@@ -166,7 +173,9 @@ class AddNote extends Component {
                             <option value=''>Select a Folder...</option>
                             {folderList}
                         </select>
-                        {this.state.folderId.touched && <ValidationError message={this.validateFolder}/>}
+                        { this.state.folderId.touched && (
+                            <ValidationError message={this.validateFolder()}/>
+                        ) }
                     </div>
                     <div className='buttons'>
                         <button 
@@ -174,8 +183,8 @@ class AddNote extends Component {
                             disabled={
                                 this.validateNoteName() ||
                                 this.validateFolder() ||
-                                this.validateContent()
-                        }
+                                this.validateContent ()
+                            }
                         >
                             Create Note
                         </button>

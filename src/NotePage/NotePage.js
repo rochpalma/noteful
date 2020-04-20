@@ -10,7 +10,7 @@ class NotePage extends Component {
     const { notes } = this.context;
     const { noteId } = this.props.match.params;
     const note = notes.find(note => note.id === noteId) || {};
-    console.log(note); 
+    console.log(note, notes, noteId); 
     
     return (
       <section className='NotePage'>

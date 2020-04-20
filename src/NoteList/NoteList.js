@@ -13,6 +13,7 @@ class NoteList extends Component{
         const getNotes = folderId 
               ? notes.filter(note => note.folderId === folderId)
               : notes;
+
         return(   
             <div className='NoteList'>
                 <ul>                 
@@ -33,6 +34,7 @@ class NoteList extends Component{
                             <button className='NavCircleButton NoteList__add-note-button'>
                                 +
                                 { ' ' }
+                                <br />
                                 Note
                             </button>
                         </Link>
