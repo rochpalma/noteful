@@ -24,7 +24,7 @@ class AddNote extends Component {
             error: null
         }
     }
-    
+  
     static contextType = NotefulContext;
 
     handleSubmit = e => {
