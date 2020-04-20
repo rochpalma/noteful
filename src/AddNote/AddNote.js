@@ -126,7 +126,7 @@ class AddNote extends Component {
         return (
             <section className='AddNote'>
                 <h2>Create a note</h2>
-                <form className='Noteful-form' onSubmit={e => this.handleSubmit(e)}>
+                <form className='Noteful-form' onSubmit={ e => this.handleSubmit(e) }>
                     <div className='field'>
                         <label htmlFor='note-name-input'>
                         Name
@@ -139,7 +139,7 @@ class AddNote extends Component {
                             required
                         />
                         { this.state.noteName.touched && (
-                            <ValidationError message={this.validateNoteName()}/>
+                            <ValidationError message={ this.validateNoteName() }/>
                         ) }
                     </div>
                     <div className='field'>
@@ -151,11 +151,9 @@ class AddNote extends Component {
                             name='note-content'
                             onChange={e => this.handleNoteContentChange(e.target.value)}
                             required
-                            aria-required='true'
-                            aria-describedby={this.validateContent}
                          />
                           { this.state.content.touched && (
-                              <ValidationError message={this.validateContent()}/>
+                              <ValidationError message={ this.validateContent() }/>
                           ) }
                     </div>                                       
                     <div className='field'>
@@ -165,16 +163,14 @@ class AddNote extends Component {
                         <select
                             id='note-folder-select' 
                             name='note-folder-id' 
-                            onChange={e => this.handleNoteFolderChange(e.target.value)}
+                            onChange={ e => this.handleNoteFolderChange(e.target.value) }
                             required
-                            aria-required='true'
-                            aria-describedby={this.validateFolder}
                         >
                             <option value=''>Select a Folder...</option>
                             {folderList}
                         </select>
                         { this.state.folderId.touched && (
-                            <ValidationError message={this.validateFolder()}/>
+                            <ValidationError message={ this.validateFolder() }/>
                         ) }
                     </div>
                     <div className='buttons'>
