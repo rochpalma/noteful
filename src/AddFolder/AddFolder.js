@@ -85,10 +85,12 @@ class AddFolder extends Component {
                             name='folder-name-input'
                             onChange={ e => this.handleFolderChange(e.target.value) }
                             required
+                            aria-required='true' 
+                            aria-describedby='folderError'
                         />
                     </div>
                     { this.state.folderName.touched && (
-                        <ValidationError message={ this.validateFolder() }/>
+                        <ValidationError message={ this.validateFolder() } id ='folderError'/>
                     ) }
                     <div className='buttons'>
                         <button 

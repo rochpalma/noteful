@@ -138,9 +138,11 @@ class AddNote extends Component {
                             name='note-name-input'
                             onChange={e => this.handleNoteNameChange(e.target.value)}
                             required
+                            aria-required='true' 
+                            aria-describedby='noteNameError'
                         />
                         { this.state.noteName.touched && (
-                            <ValidationError message={ this.validateNoteName() }/>
+                            <ValidationError message={ this.validateNoteName() } id ='noteNameError'/>
                         ) }
                     </div>
                     <div className='field'>
@@ -152,9 +154,11 @@ class AddNote extends Component {
                             name='note-content'
                             onChange={e => this.handleNoteContentChange(e.target.value)}
                             required
+                            aria-required='true' 
+                            aria-describedby='contentError'
                          />
                           { this.state.content.touched && (
-                              <ValidationError message={ this.validateContent() }/>
+                              <ValidationError message={ this.validateContent() } id='contentError'/>
                           ) }
                     </div>                                       
                     <div className='field'>
@@ -166,12 +170,14 @@ class AddNote extends Component {
                             name='note-folder-id' 
                             onChange={ e => this.handleNoteFolderChange(e.target.value) }
                             required
+                            aria-required='true' 
+                            aria-describedby='noteFolderError'
                         >
                             <option value=''>Select a Folder...</option>
                             {folderList}
                         </select>
                         { this.state.folderId.touched && (
-                            <ValidationError message={ this.validateFolder() }/>
+                            <ValidationError message={ this.validateFolder() } id='noteFolderError'/>
                         ) }
                     </div>
                     <div className='buttons'>
