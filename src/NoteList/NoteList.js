@@ -26,7 +26,8 @@ class NoteList extends Component{
                             />
                         </li>
                     ) }
-                    <div className='NoteList__button-container'>
+                </ul>
+                <div className='NoteList__button-container'>
                         <Link 
                             to='/addNote'
                             className="noteLink"
@@ -39,7 +40,6 @@ class NoteList extends Component{
                             </button>
                         </Link>
                     </div>
-                </ul>
             </div>
         )
     }   
