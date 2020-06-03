@@ -18,7 +18,7 @@ class NoteSidebar extends Component {
         const { notes, folders, } = this.context;
         const { noteId } = this.props.match.params;
         const note = notes.find(note => note.id === noteId) || {};
-        const folder = folders.find(f => f.id === note.folderId) || {};
+        const folder = folders.find(f => f.id === note.folder_id) || {};
         return (
             <div>
                 <button
@@ -31,7 +31,7 @@ class NoteSidebar extends Component {
                 </button>
                 { folder && (
                 <h3 className='NoteSidebar__folder-name'>
-                    { folder.name }
+                    { folder.folder_name }
                 </h3>
                 ) }
             </div>

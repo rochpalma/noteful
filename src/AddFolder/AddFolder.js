@@ -20,19 +20,16 @@ class AddFolder extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        const newFolder = {
-            id: Math.random().toString(36).substr(2,15),
-            name: this.state.folderName.value
-        }
-        console.log(this.state.folderName.value, "newfolder");
-        const url = `http://localhost:9090/folders`;
+        const folder_name = this.state.folderName.value;
+        const url = `http://localhost:8000/api/folders`;
         const options = { 
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(newFolder)
+            body: JSON.stringify({ folder_name })
         }
+        console.log(options.body)
         fetch(url, options)
         .then(response => {
             if(!response.ok) {
@@ -42,14 +39,14 @@ class AddFolder extends Component {
             }
             return response.json();
         })
-        .then(() => {
-            console.log(newFolder);
-            this.context.addFolder(newFolder);
-            this.props.history.push('/'); 
+        .then(folder => {
+            this.context.addFolder(folder);
+            this.props.history.push('/');
         })
         .catch(error => this.setState({
             error: error.message
         }))
+        
     }
 
     handleFolderChange(folder){
