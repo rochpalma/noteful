@@ -7,7 +7,7 @@ class Sidebar extends Component{
     static contextType = NotefulContext;
 
     countNotesForFolder = (notes, folderId) => {
-        return (notes.filter(note => note.folderId === folderId).length);
+        return (notes.filter(note => note.folder_id === folderId).length);
     };
 
     render() {
@@ -24,7 +24,7 @@ class Sidebar extends Component{
                                 <span className='NoteList__num-notes'>
                                     {this.countNotesForFolder(notes, folder.id)}
                                 </span>
-                                { folder.name }
+                                { folder.folder_name }
                             </NavLink>
                         </li>
                     ) }

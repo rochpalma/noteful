@@ -9,14 +9,14 @@ class NotePage extends Component {
   render(){
     const { notes } = this.context;
     const { noteId } = this.props.match.params;
-    const note = notes.find(note => note.id === noteId) || {};
-    console.log(note, notes, noteId); 
+    const note = notes.find(note => note.id == noteId) || {};
+    console.log(note); 
     
     return (
       <section className='NotePage'>
         <Note
           id={ note.id }
-          name= { note.name }
+          name= { note.note_name }
           modified = { note.modified }
           onDelete={ () => this.props.history.push('/') }
         />

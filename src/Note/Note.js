@@ -10,7 +10,7 @@ class Note extends Component {
   handleDelete = e => {
     e.preventDefault();
     const noteId = this.props.id;
-    const url = `http://localhost:9090/notes/${ noteId }`;
+    const url = `http://localhost:8000/api/notes/${ noteId }`;
     const options = { 
       method: 'DELETE',
       headers: {
@@ -60,7 +60,7 @@ class Note extends Component {
 }
  
 Note.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   name: PropTypes.string,
   modified: PropTypes.string
 }
