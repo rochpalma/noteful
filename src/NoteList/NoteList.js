@@ -11,7 +11,7 @@ class NoteList extends Component{
         const { notes } = this.context; 
         const { folderId } = this.props.match.params;
         const getNotes = folderId 
-              ? notes.filter(note => note.folder_id == folderId)
+              ? notes.filter(note => note.folder_id === Number(folderId))
               : notes;
 
         return(   

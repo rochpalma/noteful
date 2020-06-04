@@ -30,15 +30,12 @@ class AddNote extends Component {
     handleSubmit = e => {
         e.preventDefault();
         const { noteName, content, folderId } = this.state;
-        //const folder_id = Number(folderId.value);
         const newNote = {
-            //id: Math.random().toString(36).substr(2,15),
             note_name: noteName.value,
             modified: new Date(),
             folder_id: Number(folderId.value),
             content: content.value            
         }
-        //console.log(newNote);
 
         const url = `http://localhost:8000/api/notes`;
         const options = { 
@@ -49,7 +46,6 @@ class AddNote extends Component {
             body: JSON.stringify(newNote)
         }
         
-        console.log(options.body)
         fetch(url, options)
         .then(response => {
             if(!response.ok) {
