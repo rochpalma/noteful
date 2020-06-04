@@ -9,8 +9,7 @@ class NotePage extends Component {
   render(){
     const { notes } = this.context;
     const { noteId } = this.props.match.params;
-    const note = notes.find(note => note.id == noteId) || {};
-    console.log(note); 
+    const note = notes.find(note => note.id === Number(noteId)) || {};
     
     return (
       <section className='NotePage'>
