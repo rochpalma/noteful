@@ -37,7 +37,7 @@ class AddNote extends Component {
             content: content.value            
         }
 
-        const url = `http://localhost:8000/api/notes`;
+        const url = `https://secure-forest-85364.herokuapp.com/api/notes`;
         const options = { 
             method: 'POST',
             headers: {

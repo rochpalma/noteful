@@ -10,7 +10,7 @@ class Note extends Component {
   handleDelete = e => {
     e.preventDefault();
     const noteId = this.props.id;
-    const url = `http://localhost:8000/api/notes/${ noteId }`;
+    const url = `https://secure-forest-85364.herokuapp.com/api/notes/${ noteId }`;
     const options = { 
       method: 'DELETE',
       headers: {
