@@ -21,7 +21,7 @@ class AddFolder extends Component {
     handleSubmit = e => {
         e.preventDefault();
         const folder_name = this.state.folderName.value;
-        const url = `https://secure-forest-85364.herokuapp.com/api/folders`;
+        const url = `https://secure-forest-85364.herokuapp.com/folders`;
         const options = { 
             method: 'POST',
             headers: {
